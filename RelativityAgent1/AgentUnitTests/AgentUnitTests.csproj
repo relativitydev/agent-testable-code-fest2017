@@ -78,7 +78,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Relativity Agent1\RelativityAgent1.csproj">
+    <ProjectReference Include="..\RelativityAgent1\RelativityAgent1.csproj">
       <Project>{ca6911de-ad6d-4150-9651-2ce2811cc48f}</Project>
       <Name>RelativityAgent1</Name>
     </ProjectReference>

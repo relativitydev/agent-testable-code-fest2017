@@ -92,6 +92,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RelativityAgent1\RelativityAgent1.csproj">
+      <Project>{ca6911de-ad6d-4150-9651-2ce2811cc48f}</Project>
+      <Name>RelativityAgent1</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
