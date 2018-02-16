@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
 node('master') {
+
          def location = "RelativityAgent1\\RelativityAgent.sln"
  
         stage('Stage Checkout') {
