@@ -16,7 +16,7 @@ node('master') {
         }
 		stage('Stage Test'){
 		
-				bat "S:/NUnit-2.6.4/bin/nunit-console.exe" RelativityAgent1\\AgentUnitTests\\bin\\Debug\\AgentUnitTests.dll
+					bat 'S:/NUnit-2.6.4/bin/nunit-console.exe RelativityAgent1\\AgentUnitTests\\bin\\Debug\\AgentUnitTests.dll'
 		 
        }
     
