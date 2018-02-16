@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 node('master') {
-         def location = "Relativity Agent1\\RelativityAgent.sln"
+         def location = "RelativityAgent1\\RelativityAgent.sln"
  
         stage('Stage Checkout') {
                 checkout([$class: 'GitSCM', 
@@ -11,8 +11,8 @@ node('master') {
         }
         stage('Stage build'){
                 fileExists location
-				bat 'S:/nuget.exe restore Relativity Agent1\\Relativity Agent1\\RelativityAgent1.csproj'
-                bat "\"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe\" Relativity Agent1\\RelativityAgent.sln"
+				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
+                bat "\"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe\" RelativityAgent1\\RelativityAgent.sln"
         }
 		stage('Test'){
 
