@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 
 node('master') {
-
          def location = "RelativityAgent1\\RelativityAgent.sln"
  
         stage('Stage Checkout') {
@@ -20,5 +19,4 @@ node('master') {
 					bat 'S:/NUnit-2.6.4/bin/nunit-console.exe RelativityAgent1\\AgentUnitTests\\bin\\Debug\\AgentUnitTests.dll'
 		 
        }
-	   
 }
