@@ -6,7 +6,7 @@ node('master') {
 		 def clone_git_repo(String branch, String gitURL)
 		{
 		checkout([$class: 'GitSCM',
-		branches: [[name: '*/'branch]],
+		branches: [[name: 'branch]],
 		doGenerateSubmoduleConfigurations: false,
 		extensions: [], submoduleCfg: [],
 		userRemoteConfigs: [[ url: gitURL]]
