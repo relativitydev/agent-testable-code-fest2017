@@ -4,7 +4,7 @@ node('master') {
          def location = "RelativityAgent1\\RelativityAgent.sln"
 		 
 		bat 'echo before utilites'
-		def	utilites = load ("S:/SourceCode/Fest2017/PowerShellScripts/Utilities.groovy")
+		def	utilites = load ('S:/SourceCode/Fest2017/PowerShellScripts/Utilities.groovy')
 		bat 'echo after utilites'
         
         stage('Stage Checkout') {
@@ -20,7 +20,7 @@ node('master') {
 				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
 				bat 'echo nuget complete'
 				bat 'echo build command starting'
-			    build_solution()
+			    utilites.build_solution()
 			    bat 'echo build command done'
         }
 		stage('Stage Test'){
