@@ -5,7 +5,7 @@ try {
     # Run each test dll
     ForEach ($nunit_dll in $nunit_dlls) {
         $xml_results = [System.IO.Path]::GetRandomFileName().Split(".")[0] + ".xml"
-        & "C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" $nunit_dll --result=$xml_results`;transform="./Artifacts/Scripts/Testing/nunit3-junit.xslt"
+        & "C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" $nunit_dll
     }
 }
 catch {
