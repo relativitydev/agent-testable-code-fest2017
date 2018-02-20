@@ -12,7 +12,7 @@ node('master') {
 				bat 'echo checkout complete'
         }
 				bat 'echo before utilites'
-				utilites = load "S:/SourceCode/Fest2017/PowerShellScripts/Utilities.groovy"
+				utilites = load ("S:/SourceCode/Fest2017/PowerShellScripts/Utilities.groovy")
 				bat 'echo after utilites'
 		
         stage('Stage build'){
