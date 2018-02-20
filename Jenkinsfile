@@ -4,7 +4,7 @@ node('master') {
          def location = "RelativityAgent1\\RelativityAgent.sln"
 		 
 		bat 'echo before utilites'
-		def	utilites = load ('S:/SourceCode/Fest2017/PowerShellScripts/Utilities.groovy')
+		def	utilites = load ("Utilities.groovy")
 		bat 'echo after utilites'
         
         stage('Stage Checkout') {
