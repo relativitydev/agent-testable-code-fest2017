@@ -20,7 +20,7 @@ node('master') {
 				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
 				bat 'echo nuget complete'
 				bat 'echo build command starting'
-			    utilites.build_solution()
+			    utilites.build_solution(location)
 			    bat 'echo build command done'
         }
 		stage('Stage Test'){
