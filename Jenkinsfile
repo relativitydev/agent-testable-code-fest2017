@@ -25,9 +25,7 @@ node('master') {
 			    bat 'echo build command done'
         }
 		stage('Stage Test'){
-		
-					bat 'S:/NUnit-2.6.4/bin/nunit-console.exe RelativityAgent1\\AgentUnitTests\\bin\\Debug\\AgentUnitTests.dll'
-		 
+				utilites.run_nunit3_tests()
        }
 }
 	   

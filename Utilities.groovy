@@ -8,7 +8,7 @@ def build_solution()
 		
 		
 def run_nunit3_tests() {
-        bat "powershell -Command ./Artifacts/Scripts/Testing/RunNUnitTests.ps1"
+        bat "powershell -Command ./RunNUnitTests.ps1"
         junit allowEmptyResults: true, testResults: '*.xml'
         }
 
