@@ -1,11 +1,10 @@
 try {
     # Get all test dlls
-    $nunit_dlls = Get-ChildItem -Recurse -Name -Filter *test.dll | Select-String -Pattern bin\\x64\\Release | Sort-Object
+    $nunit_dlls = Get-ChildItem -Recurse -Name -Filter *UnitTests.dll | Select-String -Pattern bin\\Release | Sort-Object
 
     # Run each test dll
     ForEach ($nunit_dll in $nunit_dlls) {
-        $xml_results = [System.IO.Path]::GetRandomFileName().Split(".")[0] + ".xml"
-        & "C:/Program Files (x86)/NUnit.org/nunit-console/nunit3-console.exe" $nunit_dll
+        "S:/NUnit-2.6.4/bin/nunit-console.exe" $nunit_dll
     }
 }
 catch {
