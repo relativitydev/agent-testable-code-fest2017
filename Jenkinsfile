@@ -2,12 +2,11 @@
 
 node('master') {
          def location = ".\\RelativityAgent1\\RelativityAgent.sln"
-		 def Msbuildlocation = "C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe"
 		 
         
         stage('Stage Checkout') {
                 checkout([$class: 'GitSCM', 
-                branches: [[name: '*/master']], 
+                branches: [[name: env.BRANCH_NAME]], 
                 doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
                 userRemoteConfigs: [[url: 'https://github.com/relativitydev/agent-testable-code-fest2017.git']]])
 				bat 'echo checkout complete'
@@ -23,7 +22,7 @@ node('master') {
 				bat 'echo nuget complete'
 				bat 'echo build command starting'
 				echo location
-			    utilites.build_solution(Msbuildlocation)
+			    utilites.build_solution()
 			    bat 'echo build command done'
         }
 		stage('Stage Test'){
