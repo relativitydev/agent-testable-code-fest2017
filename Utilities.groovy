@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 
-def build_solution(msbuildlocation, location) 
+def build_solution(string msbuildlocation, string location) 
          {
             bat "\"msbuildlocation" location"
         }
