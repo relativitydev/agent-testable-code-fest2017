@@ -4,9 +4,8 @@
 def build_solution(msbuildlocation, location) 
          {	
 			print msbuildlocation
-			print location
-			print msbuildlocation location
-            bat msbuildlocation location
+			print "location"
+            bat msbuildlocation "location"
         }
 		
 		
