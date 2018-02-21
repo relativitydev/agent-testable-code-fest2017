@@ -2,11 +2,12 @@
 
 node('master') {
          def location = ".\\RelativityAgent1\\RelativityAgent.sln"
+		 def branch = env.BRANCH_NAME
 		 
         
         stage('Stage Checkout') {
                 checkout([$class: 'GitSCM', 
-                branches: [[name: ${env.BRANCH_NAME}]], 
+                branches: [[name: branch]], 
                 doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
                 userRemoteConfigs: [[url: 'https://github.com/relativitydev/agent-testable-code-fest2017.git']]])
 				bat 'echo checkout complete'
