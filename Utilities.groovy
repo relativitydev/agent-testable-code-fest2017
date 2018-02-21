@@ -4,7 +4,7 @@
 def build_solution(msbuildlocation) 
          {	
 			print msbuildlocation
-            bat msbuildlocation ""RelativityAgent1\\RelativityAgent.sln"
+            bat msbuildlocation "RelativityAgent1\\RelativityAgent.sln"
         }
 		
 		
