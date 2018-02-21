@@ -21,7 +21,7 @@ node('master') {
 				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
 				bat 'echo nuget complete'
 				bat 'echo build command starting'
-			    utilites.build_solution("C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe\", location)
+			    utilites.build_solution("C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe\", './RelativityAgent1/RelativityAgent.sln')
 			    bat 'echo build command done'
         }
 		stage('Stage Test'){
