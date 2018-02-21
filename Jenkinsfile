@@ -2,7 +2,7 @@
 
 node('master') {
          def location = ".\\RelativityAgent1\\RelativityAgent.sln"
-		 def MSbuild = "\"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe"
+		 def Msbuildlocation = "\"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe"
 		 
         
         stage('Stage Checkout') {
@@ -22,8 +22,8 @@ node('master') {
 				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
 				bat 'echo nuget complete'
 				bat 'echo build command starting'
-				bat 'echo ${location}'
-			    utilites.build_solution(MSbuild, location)
+				echo location
+			    utilites.build_solution(Msbuildlocation, location)
 			    bat 'echo build command done'
         }
 		stage('Stage Test'){
