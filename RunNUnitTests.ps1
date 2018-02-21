@@ -1,6 +1,6 @@
 try {
     # Get all test dlls
-    $nunit_dlls = Get-ChildItem -Recurse -Name -Filter *UnitTests.dll | Select-String -Pattern bin\\Release | Sort-Object
+    $nunit_dlls = Get-ChildItem -Recurse -Name -Filter *UnitTests.dll | Select-String -Pattern bin\\Debug | Sort-Object
 	
 	Write-Output -InputObject $nunit_dlls
 
