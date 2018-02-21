@@ -6,7 +6,7 @@ node('master') {
         
         stage('Stage Checkout') {
                 checkout([$class: 'GitSCM', 
-                branches: [[name: '*/master']], 
+                branches: [[name: '${env.BRANCH_NAME}']], 
                 doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
                 userRemoteConfigs: [[url: 'https://github.com/relativitydev/agent-testable-code-fest2017.git']]])
 				bat 'echo checkout complete'
