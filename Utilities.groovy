@@ -9,7 +9,6 @@ def build_solution()
 		
 def run_nunit3_tests() {
         bat "powershell -Command ./RunNUnitTests.ps1"
-        junit allowEmptyResults: true, testResults: '*.xml'
         }
 
 
