@@ -5,7 +5,7 @@ node('master') {
         
 		
         stage('Stage Checkout') {
-               shallow_clone_git_repo('master', 'ssh://git@git.kcura.corp:7999/aut/testapps.git')
+               shallow_clone_git_repo('master', 'https://github.com/relativitydev/agent-testable-code-fest2017.git')
         }
 		
 		bat 'echo before utilites'
