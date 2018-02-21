@@ -3,7 +3,7 @@
 
 def build_solution(string msbuildlocation, string location) 
          {
-            bat "\"msbuildlocation" location"
+            bat "msbuildlocation" location"
         }
 		
 		
