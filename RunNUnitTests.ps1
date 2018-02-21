@@ -6,7 +6,7 @@ try {
 
     # Run each test dll
     ForEach ($nunit_dll in $nunit_dlls) {
-        "S:/NUnit-2.6.4/bin/nunit-console.exe" $nunit_dll
+        'S:/NUnit-2.6.4/bin/nunit-console.exe' $nunit_dll
     }
 }
 catch {
