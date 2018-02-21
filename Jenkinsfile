@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 node('master') {
-         def location = "RelativityAgent1\\RelativityAgent.sln"
+         def location = ".\RelativityAgent1\\RelativityAgent.sln"
 		 def MSbuild = "\"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe"
 		 
         
