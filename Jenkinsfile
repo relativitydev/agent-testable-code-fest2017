@@ -5,8 +5,7 @@ node('master') {
         
 		
         stage('Stage Checkout') {
-			echo 'Pulling...' + "{$GIT_BRANCH}"
-               shallow_clone_git_repo('master', 'https://github.com/relativitydev/agent-testable-code-fest2017.git')
+	            shallow_clone_git_repo('master', 'https://github.com/relativitydev/agent-testable-code-fest2017.git')
         }
 		
 		bat 'echo before utilites'
