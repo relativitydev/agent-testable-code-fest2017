@@ -2,7 +2,7 @@ try {
     # Get all test dlls
     $nunit_dlls = Get-ChildItem -Recurse -Name -Filter *UnitTests.dll | Select-String -Pattern bin\\Debug | Sort-Object
 	
-	echo $nunit_dlls
+	Write-Host "dll printed out : "  $($nunit_dlls)
 
     # Run each test dll
     ForEach ($nunit_dll in $nunit_dlls) {
