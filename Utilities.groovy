@@ -1,11 +1,10 @@
 #!/usr/bin/env groovy
 
 
-def build_solution(msbuildlocation, location) 
+def build_solution(msbuildlocation) 
          {	
 			print msbuildlocation
-			print "location"
-            bat msbuildlocation "location"
+            bat msbuildlocation ""RelativityAgent1\\RelativityAgent.sln"
         }
 		
 		
