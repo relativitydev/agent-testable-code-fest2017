@@ -14,7 +14,7 @@ node('master') {
 		bat 'echo before utilites'
 		def	utilites = load ("Utilities.groovy")
 		bat 'echo after utilites'
-		echo env.BRANCH_NAME
+		echo '${env.BRANCH_NAME}'
 		
 		echo "${env.getEnvironment()}"
 		
