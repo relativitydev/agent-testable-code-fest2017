@@ -16,6 +16,8 @@ node('master') {
 		bat 'echo after utilites'
 		echo env.BRANCH_NAME
 		
+		echo "${env.getEnvironment()}"
+		
         stage('Stage build'){
                 fileExists location
 				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
