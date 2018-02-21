@@ -3,8 +3,8 @@
 
 def build_solution(msbuildlocation, location) 
          {	
-			echo msbuildlocation
-			echo location
+			print msbuildlocation
+			print location
             bat msbuildlocation location
         }
 		
