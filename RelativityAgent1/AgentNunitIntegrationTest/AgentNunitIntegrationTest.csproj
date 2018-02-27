@@ -36,14 +36,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="kCura.Data.RowDataGateway">
-      <HintPath>C:\Program Files\kCura Corporation\Relativity SDK\Agents\Client\kCura.Data.RowDataGateway.dll</HintPath>
+    <Reference Include="kCura, Version=9.6.26.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Relativity.Other.9.6.26.97\lib\kCura.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="kCura.Relativity.Client">
-      <HintPath>C:\Program Files\kCura Corporation\Relativity SDK\Services API\Client\kCura.Relativity.Client.dll</HintPath>
+    <Reference Include="kCura.OI.FileID">
+      <HintPath>..\..\..\..\Transitioned Solutions\kcd-scripts-integration\Vendor\Relativity\kCura.OI.FileID.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="kCura.Relativity.Client, Version=9.6.26.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Relativity.Rsapi.9.6.26.97\lib\kCura.Relativity.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Relativity Agent1, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -90,7 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RelativityAgent1\RelativityAgent1.csproj">

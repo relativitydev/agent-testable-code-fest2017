@@ -32,7 +32,7 @@ namespace AgentUnitTest
          //Create instance of Test Helper & set up services manager and db context
 			var helper = new TestHelper();
 			ServicesManager = helper.GetServicesManager();
-			EddsDbContext = helper.GetDBContext(-1);
+		//	EddsDbContext = helper.GetDBContext(-1);
 			WorkspaceDbConext = helper.GetDBContext(WorkspaceId);
 
 			//Create client
