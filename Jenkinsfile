@@ -2,7 +2,7 @@
 
 node('master') {
          def location = ".\\RelativityAgent1\\RelativityAgent.sln"
-		 def unittestdll = ".\\RelativityAgent1\\AgentUnitTests\bin\Debug\\AgentUnitTests.dll"
+		 def unittestdll = ".\\RelativityAgent1\\AgentUnitTests\\bin\\Debug\\AgentUnitTests.dll"
 		 def integrtiontestdll = ".\\RelativityAgent1\\AgentNunitIntegrationTest\\bin\\Debug\\AgentNunitIntegrationTest.dll"
         
 		
