@@ -287,3 +287,10 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /Artifacts
+/buildtools/NUnit.ConsoleRunner.3.6.0
+/buildtools/NUnit.Extension.NUnitV2ResultWriter.3.5.0
+/buildtools/NUnit.Extension.VSProjectLoader.3.5.0
+/buildtools/psake.4.6.0
+/buildtools/nuget.exe
+/buildtools/kCura.PSBuildTools.0.3.0
+/buildtools/Microsoft.Build.Logging.StructuredLogger.1.0.89

@@ -21,7 +21,6 @@ $TOOLS_DIR = Join-Path $BASE_DIR "buildtools"
 Write-Host "Tools directory: $TOOLS_DIR"
 
 $TOOLS_PACKAGES_FILE = Join-Path $TOOLS_DIR "packages.config"
-#$TOOLS_PACKAGES_FILE = Join-Path "RelativityAgent1\RelativityAgent1" -ChildPath "packages.config"
 Write-Host "Packages config : $TOOLS_PACKAGES_FILE"
 
 $LOGGER = Join-Path $TOOLS_DIR "Microsoft.Build.Logging.StructuredLogger.1.0.89\lib\net46\StructuredLogger.dll"
@@ -34,7 +33,6 @@ Write-Host "$NUGET_EXE"
 
 $NUNIT_EXE = Join-Path $TOOLS_DIR "NUnit.ConsoleRunner.3.6.0\tools\nunit3-console.exe"
 
-$MSBUILD_EXE = "C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/Bin/MSBuild.exe"
 $SOLUTION_PATH = Join-Path "RelativityAgent1\RelativityAgent1" -ChildPath "RelativityAgent.sln"
 
 # Restore Nuget package
@@ -57,7 +55,6 @@ if ($LASTEXITCODE -ne 0) {
 
 # Import any modules that you'll need to build
 Import-Module (Join-Path $TOOLS_DIR "psake.4.6.0\tools\psake.psm1") -ErrorAction Stop
-Import-Module (Join-Path $TOOLS_DIR "kCura.PSBuildTools.0.3.0\PSBuildTools.psm1") -ErrorAction Stop
 
 # Execute the build
 Invoke-PSake "default.ps1" `

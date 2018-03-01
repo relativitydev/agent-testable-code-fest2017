@@ -4,23 +4,17 @@ Framework "4.6" #.NET framework version
 properties {
 	$build_config = "Debug"
 	$verbosity = "normal" # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
-	#$productNameForVersioning = 'HTML5ConversionService'
-	$target_environment = $null
 	$build_artifacts = Join-Path $root "Artifacts"
 	$test_logs = Join-Path $build_artifacts "TestLogs"
 	$build_logs = Join-Path $build_artifacts "BuildLogs"
-	$packages = Join-Path $build_artifacts "Packages"
-	#$service_project_directory = Join-Path $root "Source\Relativity.SharedServices.Conversion.Fabric"
-	#$mock_service_project_directory = Join-Path $root "Source\Relativity.SharedServices.Conversion.Mocks.Fabric"
-	
-	$solution = Join-Path $root "RelativityAgent1\RelativityAgent.sln"
-    
+	$solution = Join-Path $root "RelativityAgent1\RelativityAgent.sln"  
 }
 
 task default -Depends LocalBuild
 task LocalBuild -Depends Compile, UnitTest, IntegrationTest
 
 task NuGetRestore -Description "Restore NuGet packages for the solution" {
+	Write-Host "Solution :  $solution"
 	exec { & $nuget_exe @('restore', $solution) }
 }
 
@@ -58,14 +52,23 @@ task UnitTest -Alias Test -Depends TestInitialize -Description "Run NUnit unit t
 }
 
 task IntegrationTest -Depends TestInitialize -Description "Run NUnit integration unit tests. " {
-	$testDir = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest\AgentIntegrationTest.cs"
-	#$configSource = Join-Path $testDir "app.config"
-	$configSource = "RelativityAgent1\AgentNunitIntegrationTest\app.config"
-	$configDestination = "RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll.config"
+	$testDir = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest"
+	Write-Verbose "Test directory is : $testDir"
+	Write-Host "Test directory is : $testDir"
+	$configSource = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest\app.config"
+	Write-Verbose "configSource is : $configSource"
+	Write-Host "configSource is : $configSource"
+	$configDestination = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll.config"
+	Write-Verbose "configDestination is : $configDestination"
+	Write-Host "configDestination is : $configDestination"
+	Write-Host "Nunit exe is here : $nunit_exe"
+	$testAssembly = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll"
+	Write-Host "Test assembly : $testAssembly"
 
 	Copy-Item $configSource $configDestination -Verbose:$VerbosePreference
 
-	exec { & $nunit_exe $solution --where "cat == testtype.universal && class=~/^.+\.AgentIntegrationTest\..+$/" --result="$test_logs\IntegrationTests.xml;format=nunit2" } -errorMessage "Integration tests failed!"
+	#exec { & $nunit_exe $solution --where "cat == testtype.universal && class=~/^.+\.AgentIntegrationTest\..+$/" --result="$test_logs\IntegrationTests.xml;format=nunit2" } -errorMessage "Integration tests failed!"
+	exec { & $nunit_exe $testAssembly --result="$test_logs\IntegrationTests.xml;format=nunit2" } -errorMessage "Integration tests failed!"
 }
 	
 
