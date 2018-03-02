@@ -13,6 +13,13 @@ Check this if you want to copy files to blob from a different branch''', name: '
 	def type = params.buildType
 	
 node('master') {
+ def shallow_clone_git_repo(String branch, String gitURL){
+	    checkout([$class: 'GitSCM', 
+                branches: [[name: branch]], 
+                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
+                userRemoteConfigs: [[url: gitURL]]])
+				bat 'echo checkout complete'
+	   }
          def location = ".\\RelativityAgent1\\RelativityAgent.sln"
         
 		
@@ -39,16 +46,8 @@ node('master') {
 	   stage('Stage Integration Test'){
 				bat "powershell.exe \"& {.\\build.ps1 IntegrationTest}\""
        }
-	   
-	   def shallow_clone_git_repo(String branch, String gitURL){
-	    checkout([$class: 'GitSCM', 
-                branches: [[name: branch]], 
-                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
-                userRemoteConfigs: [[url: gitURL]]])
-				bat 'echo checkout complete'
 	   }
-	   }
-	   }
+}
 	   
 finally
 {
