@@ -39,13 +39,15 @@ node('master') {
 	   stage('Stage Integration Test'){
 				bat "powershell.exe \"& {.\\build.ps1 IntegrationTest}\""
        }
-}	   
+	   
 	   def shallow_clone_git_repo(String branch, String gitURL){
 	    checkout([$class: 'GitSCM', 
                 branches: [[name: branch]], 
                 doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
                 userRemoteConfigs: [[url: gitURL]]])
 				bat 'echo checkout complete'
+	   }
+	   }
 	   }
 	   
 finally
