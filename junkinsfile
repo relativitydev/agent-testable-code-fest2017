@@ -4,12 +4,7 @@ def passed = false
 
 try 
 {
-	properties([parameters([string(defaultValue: 'debug', description: 'Type of build: release or debug', name: 'buildType'),
-	                        booleanParam(defaultValue: false, description:'''Develop and Master always copy to blob.
-Check this if you want to copy files to blob from a different branch''', name: 'copyToBlob'),
-							string(defaultValue: 'test', description: 'Machine onto which we will deploy the package', name: 'deploymentEnvironment'),
-							string(defaultValue: '', description: '', name: 'azureCredentialId'),
-							])])
+	properties([parameters([string(defaultValue: 'debug', description: 'Type of build: release or debug', name: 'buildType'),])])
 	def type = params.buildType
 	
 node('master') {
