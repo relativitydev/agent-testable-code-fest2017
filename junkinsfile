@@ -30,7 +30,7 @@ node('master') {
 				bat 'echo build command starting'
 				echo location
 			    echo type
-				bat "powershell.exe \"& {.\\build.ps1 Compile -configuration ${type}
+				bat "powershell.exe \"& {.\\build.ps1 Compile -configuration ${type};
 			    bat 'echo build command done'
         }
 		stage('Stage Unit Test'){
