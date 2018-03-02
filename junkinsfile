@@ -53,9 +53,9 @@ finally
 	if (!passed) 
 	{
 		mail (
-			subject: "FAILURE: Job '${env.JOB_NAME} [${versionNumber}]'",
-			body: "FAILURE: Job '${env.JOB_NAME} [${versionNumber}]': Check console output at ${env.BUILD_URL}",
-			to: 'dbero@kcura.com, plembke@kcura.com, mhill@kcura.com, mjassal@kcura.com, abrottman@kcura.com, clowe@kcura.com, kaerabati@kcura.com, mpatterson@kcura.com, carreola@kcura.com, zjohnson@kcura.com'
+			subject: "FAILURE: Job '${env.JOB_NAME}'",
+			body: "FAILURE: Job '${env.JOB_NAME}': Check console output at ${env.BUILD_URL}",
+			to: 'priyanka.pande@relativity.com'
 		)
 	}
 	if (passed) 
