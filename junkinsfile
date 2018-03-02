@@ -1,5 +1,17 @@
 #!/usr/bin/env groovy
 
+def passed = false
+
+try 
+{
+	properties([parameters([string(defaultValue: 'release', description: 'Type of build: release or debug', name: 'buildType'),
+	                        booleanParam(defaultValue: false, description:'''Develop and Master always copy to blob.
+Check this if you want to copy files to blob from a different branch''', name: 'copyToBlob'),
+							string(defaultValue: 'test', description: 'Machine onto which we will deploy the package', name: 'deploymentEnvironment'),
+							string(defaultValue: '', description: '', name: 'azureCredentialId'),
+							])])
+	def type = params.buildType
+	
 node('master') {
          def location = ".\\RelativityAgent1\\RelativityAgent.sln"
         
@@ -14,15 +26,18 @@ node('master') {
 		
         stage('Stage build'){
                 fileExists location
-				bat 'S:/nuget.exe restore RelativityAgent1\\RelativityAgent.sln'
-				bat 'echo nuget complete'
+				
 				bat 'echo build command starting'
 				echo location
-			    utilites.build_solution()
+			    echo type
+				bat "powershell.exe \"& {.\\build.ps1 Compile -configuration ${type}
 			    bat 'echo build command done'
         }
-		stage('Stage Test'){
-				utilites.run_nunit3_tests()
+		stage('Stage Unit Test'){
+				bat "powershell.exe \"& {.\\build.ps1 UnitTest}\""
+       }
+	   stage('Stage Integration Test'){
+				bat "powershell.exe \"& {.\\build.ps1 IntegrationTest}\""
        }
 }	   
 	   def shallow_clone_git_repo(String branch, String gitURL){
@@ -33,7 +48,21 @@ node('master') {
 				bat 'echo checkout complete'
 	   }
 	   
-
+finally
+{
+	if (!passed) 
+	{
+		mail (
+			subject: "FAILURE: Job '${env.JOB_NAME} [${versionNumber}]'",
+			body: "FAILURE: Job '${env.JOB_NAME} [${versionNumber}]': Check console output at ${env.BUILD_URL}",
+			to: 'dbero@kcura.com, plembke@kcura.com, mhill@kcura.com, mjassal@kcura.com, abrottman@kcura.com, clowe@kcura.com, kaerabati@kcura.com, mpatterson@kcura.com, carreola@kcura.com, zjohnson@kcura.com'
+		)
+	}
+	if (passed) 
+	{
+		
+	}
+}
 
 	   
 	   
