@@ -2,7 +2,7 @@
 
 def create_nunit_app_config() {
     
-    def smoke_template = readFile 'S:\SourceCode\Fest2017\agent-testable-code-fest2017\RelativityAgent1\AgentNunitIntegrationTest\app.config'
+    def smoke_template = readFile 'C:\Program Files (x86)\Jenkins\workspace\Build stuff 4\RelativityAgent1\AgentNunitIntegrationTest\app.config'
     
     smoke_template = smoke_template.replace('$AdminPassword', params.AdminPassword.toString())
     smoke_template = smoke_template.replace('$AdminUsername', params.AdminUsername)

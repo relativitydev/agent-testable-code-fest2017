@@ -21,12 +21,16 @@ node('master') {
     
         }
 		
+		stage('Load Utilities'){
 		bat 'echo before utilites'
 		def	utilites = load ("Utilities.groovy")
 		bat 'echo after utilites'
+		}
 		
 		stage('Create app config'){
+			bat 'echo create config start'
         utilites.create_nunit_app_config()
+			bat 'echo config created'
     }
         stage('Stage build'){
                 fileExists location
