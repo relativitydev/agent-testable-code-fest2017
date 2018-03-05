@@ -2,7 +2,7 @@
 
 def create_nunit_app_config() {
     
-    def smoke_template = readFile 'RelativityAgent1\\/SmokeTemplate.config'
+    def smoke_template = readFile 'RelativityAgent1\\AgentNunitIntegrationTest\\app.config'
     
     smoke_template = smoke_template.replace('$AdminPassword', params.AdminPassword.toString())
     smoke_template = smoke_template.replace('$AdminUsername', params.AdminUsername)
