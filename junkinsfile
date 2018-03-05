@@ -25,6 +25,9 @@ node('master') {
 		def	utilites = load ("Utilities.groovy")
 		bat 'echo after utilites'
 		
+		stage('Create app config'){
+        utilites.create_nunit_app_config()
+    }
         stage('Stage build'){
                 fileExists location
 				
