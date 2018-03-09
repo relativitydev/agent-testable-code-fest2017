@@ -62,7 +62,7 @@ namespace AgentNunitIntegrationTest
 		[TestFixtureTearDown]
 		public void Execute_TestFixtureTeardown()
 		{
-			Relativity.Test.Helpers.WorkspaceHelpers.DeleteWorkspace.Delete(Client, _workspaceId);
+			//Relativity.Test.Helpers.WorkspaceHelpers.DeleteWorkspace.Delete(Client, _workspaceId);
 		}
 
 		#endregion
