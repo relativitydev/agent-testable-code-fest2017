@@ -55,7 +55,7 @@ task IntegrationTest -Depends TestInitialize -Description "Run NUnit integration
 	$testDir = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest"
 	Write-Verbose "Test directory is : $testDir"
 	Write-Host "Test directory is : $testDir"
-	$configSource = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest\app.config"
+	$configSource = Join-Path $root "JenkinsApp.config"
 	Write-Verbose "configSource is : $configSource"
 	Write-Host "configSource is : $configSource"
 	$configDestination = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll.config"

@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Linq;
 using kCura.Relativity.Client;
 using NUnit.Framework;
 using Relativity.API;
 using Relativity.Test.Helpers;
+using Relativity.Test.Helpers.ServiceFactory.Extentions;
 using Relativity.Test.Helpers.SharedTestHelpers;
-using IServicesMgr = Relativity.Test.Helpers.Interface.IServicesMgr;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.Remoting.Messaging;
 
 namespace AgentNunitIntegrationTest
 {
@@ -16,7 +21,7 @@ namespace AgentNunitIntegrationTest
 		public IRSAPIClient Client;
 		public int WorkspaceId;
 		public IDBContext WorkspaceDbConext;
-		public IServicesMgr ServicesManager;
+		public Relativity.API.IServicesMgr ServicesManager;
 		public IDBContext EddsDbContext;
 		public int FieldArtifactId;
 		public const string NewFieldName = "Demo Document Field";
@@ -31,18 +36,23 @@ namespace AgentNunitIntegrationTest
 		[TestFixtureSetUp]
 		public void Execute_TestFixtureSetup()
 		{
-			WorkspaceId = 1018783;
+			//WorkspaceId = 1018783;
 			//Create Workspace
 
 			//Create instance of Test Helper & set up services manager and db context
 			var helper = new TestHelper();
 			ServicesManager = helper.GetServicesManager();
 			EddsDbContext = helper.GetDBContext(-1);
-			//_workspaceId = CreateWorkspace();
-			WorkspaceDbConext = helper.GetDBContext(WorkspaceId);
+			
 
+			//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 			//Create client
 			Client = helper.GetServicesManager().GetProxy<IRSAPIClient>(Relativity.Test.Helpers.SharedTestHelpers.ConfigurationHelper.ADMIN_USERNAME, Relativity.Test.Helpers.SharedTestHelpers.ConfigurationHelper.DEFAULT_PASSWORD);
+			_workspaceId = CreateWorkspace();
+			WorkspaceDbConext = helper.GetDBContext(WorkspaceId);
+
+			//Create Field
+			CreateField_LongText(Client, _workspaceId, NewFieldName);
 		}
 
 		#endregion
@@ -50,7 +60,10 @@ namespace AgentNunitIntegrationTest
 		#region TestfixtureTeardown
 
 		[TestFixtureTearDown]
-		public void Execute_TestFixtureTeardown() { }
+		public void Execute_TestFixtureTeardown()
+		{
+			Relativity.Test.Helpers.WorkspaceHelpers.DeleteWorkspace.Delete(Client, _workspaceId);
+		}
 
 		#endregion
 
@@ -61,13 +74,16 @@ namespace AgentNunitIntegrationTest
 		{
 			//Arrange and Act
 			// Get the Field Artifact ID of "Demo Document Field"
-			FieldArtifactId = Relativity.Test.Helpers.ArtifactHelpers.Fields.GetFieldArtifactID(NewFieldName, WorkspaceDbConext);
+			FieldArtifactId = GetFieldArtifactID(NewFieldName, WorkspaceDbConext, Client);
 
 			//Get the field Count of the field.
-			var fieldCount = Relativity.Test.Helpers.ArtifactHelpers.Fields.GetFieldCount(WorkspaceDbConext, FieldArtifactId);
+			if (FieldArtifactId == 0)
+			{
+				throw new Exception("Field failed to create");
+			}
 
 			//Assert
-			Assert.AreEqual(fieldCount, 1);
+			Assert.Greater(FieldArtifactId, 1);
 		}
 
 		#endregion
@@ -77,6 +93,7 @@ namespace AgentNunitIntegrationTest
 		{
 			try
 			{
+				Client.APIOptions.WorkspaceID = -1;
 				// retry logic for workspace creation
 				var j = 1;
 
@@ -86,10 +103,40 @@ namespace AgentNunitIntegrationTest
 					try
 					{
 						Console.WriteLine("Creating workspace.....");
+
+						//Not Using Test Helpers
+						//int? templateArtifactID = null;
+						//kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Workspace> query = new kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Workspace>();
+						//query.Condition = new kCura.Relativity.Client.TextCondition(kCura.Relativity.Client.DTOs.FieldFieldNames.Name, kCura.Relativity.Client.TextConditionEnum.EqualTo, ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME);
+						//query.Fields = kCura.Relativity.Client.DTOs.FieldValue.AllFields;
+						//kCura.Relativity.Client.DTOs.QueryResultSet<kCura.Relativity.Client.DTOs.Workspace> resultSet = Client.Repositories.Workspace.Query(query, 0);
+
+						//templateArtifactID = resultSet.Results.FirstOrDefault().Artifact.ArtifactID;
+						//var workspaceDTO = new kCura.Relativity.Client.DTOs.Workspace();
+						//workspaceDTO.Name = _workspaceName;
+
+						//ProcessOperationResult result = new kCura.Relativity.Client.ProcessOperationResult();
+						//Create a ProcessInformation to return the status of the Workspace creation process.
+						//kCura.Relativity.Client.ProcessInformation processInfo;
+						//try
+						//{
+						//	Call CreateAsync passing the templateID and workspaceDTO.
+						//	This returns a ProcessOperationResult with a Success property and a ProcessID property.
+						//	NOTE: The Success property indicates the success of starting the create process, 
+						//	not the success of the actual workspace creation.
+						//	result = Client.Repositories.Workspace.CreateAsync(templateArtifactID.Value, workspaceDTO);
+
+						//}
+						//catch (Exception ex)
+						//{
+						//	Console.WriteLine(ex.Message, "Unhandled Exception");
+
+						//}
+
 						_workspaceId =
-							Relativity.Test.Helpers.WorkspaceHelpers.CreateWorkspace.CreateWorkspaceAsync(_workspaceName,
-								ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME, ServicesManager, ConfigurationHelper.ADMIN_USERNAME,
-								ConfigurationHelper.DEFAULT_PASSWORD).Result;
+						Relativity.Test.Helpers.WorkspaceHelpers.CreateWorkspace.CreateWorkspaceAsync(_workspaceName,
+							ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME, ServicesManager, ConfigurationHelper.ADMIN_USERNAME,
+							ConfigurationHelper.DEFAULT_PASSWORD).Result;
 						Console.WriteLine($"Workspace created [WorkspaceArtifactId= {_workspaceId}].....");
 						j = 5;
 					}
@@ -114,6 +161,70 @@ namespace AgentNunitIntegrationTest
 				Console.WriteLine($"Workspace created [WorkspaceArtifactId= {_workspaceId}].....");
 			}
 			return _workspaceId;
+		}
+
+
+		public static Int32 GetFieldArtifactID(String fieldname, IDBContext workspaceDbContext, IRSAPIClient client)
+		{
+			int fieldArtifactID = 0;
+			kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Field> query = new kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Field>();
+			query.Condition = new kCura.Relativity.Client.TextCondition(kCura.Relativity.Client.DTOs.FieldFieldNames.Name, kCura.Relativity.Client.TextConditionEnum.EqualTo, fieldname);
+			query.Fields = kCura.Relativity.Client.DTOs.FieldValue.AllFields;
+			kCura.Relativity.Client.DTOs.QueryResultSet<kCura.Relativity.Client.DTOs.Field> resultSet = client.Repositories.Field.Query(query, 0);
+
+			fieldArtifactID = resultSet.Results[0].Artifact.ArtifactID;
+			return fieldArtifactID;
+		}
+
+		public static Int32 CreateField_LongText(IRSAPIClient client, int workspaceID, string fieldName)
+		{
+
+			Int32 fieldID = 0;
+
+			//Set the workspace ID
+			client.APIOptions.WorkspaceID = workspaceID;
+
+			//Create a Field DTO
+			kCura.Relativity.Client.DTOs.Field fieldDTO = new kCura.Relativity.Client.DTOs.Field();
+
+			//Set primary fields
+			//The name of the sample data is being set to a random string so that sample data can be debugged
+			//and never causes collisions. You can set this to any string that you want
+			fieldDTO.Name = string.Format(fieldName);
+			fieldDTO.ObjectType = new kCura.Relativity.Client.DTOs.ObjectType()
+			{
+				DescriptorArtifactTypeID = (int)ArtifactType.Document
+			};
+			fieldDTO.FieldTypeID = kCura.Relativity.Client.FieldType.LongText;
+
+			// Set secondary fields
+			fieldDTO.AllowHTML = false;
+			fieldDTO.AllowGroupBy = false;
+			fieldDTO.AllowPivot = false;
+			fieldDTO.AllowSortTally = false;
+			fieldDTO.AvailableInViewer = false;
+			fieldDTO.IncludeInTextIndex = true;
+			fieldDTO.IsRequired = false;
+			fieldDTO.OpenToAssociations = false;
+			fieldDTO.Linked = false;
+			fieldDTO.Unicode = true;
+			fieldDTO.Width = "";
+			fieldDTO.Wrapping = true;
+
+			//Create the field
+			kCura.Relativity.Client.DTOs.WriteResultSet<kCura.Relativity.Client.DTOs.Field> resultSet = client.Repositories.Field.Create(fieldDTO);
+
+			//Check for success
+			if (resultSet.Success)
+			{
+				fieldID = resultSet.Results.FirstOrDefault().Artifact.ArtifactID;
+				return fieldID;
+			}
+			else
+			{
+				Console.WriteLine("Field was not created");
+				return fieldID;
+			}
 		}
 	}
 }
