@@ -28,7 +28,8 @@ task TestInitialize -Description "Cleanup pre-existing test artifacts, if they e
 }
 
 
-task Compile -Depends CompileInitialize, NuGetRestore -Description "Compile the solution" {
+task Compile -Depends CompileInitialize -Description "Compile the solution" {
+#task Compile -Depends CompileInitialize, NuGetRestore -Description "Compile the solution" {
 	Write-Verbose "Configuration: $build_config"
 	Write-Verbose "Verbosity: $verbosity"
 
