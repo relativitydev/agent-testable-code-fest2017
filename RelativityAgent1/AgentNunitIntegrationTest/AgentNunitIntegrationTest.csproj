@@ -51,10 +51,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Vendor\kCura.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="kCura.Injection, Version=1.0.8.0, Culture=neutral, PublicKeyToken=318fc9f898ce154d, processorArchitecture=MSIL">
-      <HintPath>..\packages\kCura.Injection.9.6.60.172\lib\net462\kCura.Injection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="kCura.Relativity.Client, Version=9.6.53.73, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Relativity.Rsapi.9.6.53.73\lib\kCura.Relativity.Client.dll</HintPath>
       <Private>True</Private>
