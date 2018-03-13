@@ -73,9 +73,16 @@ def create_nunit_app_config() {
     
     smoke_template = smoke_template.replace('$AdminPassword', params.AdminPassword.toString())
 	echo '$AdminPassword'
+	echo params.AdminPassword.toString()
     smoke_template = smoke_template.replace('$AdminUsername', params.AdminUsername)
+	echo '$AdminUsername'
+	echo params.AdminUsername.toString()
     smoke_template = smoke_template.replace('$RESTServerAddress', params.RESTServerAddress)
+	echo '$RESTServerAddress'
+	echo params.RESTServerAddress.toString()
     smoke_template = smoke_template.replace('$RSAPIServerAddress', params.RSAPIServerAddress)
+	echo '$RSAPIServerAddress'
+	echo params.RSAPIServerAddress.toString()
     
     retry(3) {
         writeFile file: "C:/smoketest.config", text: smoke_template
