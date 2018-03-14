@@ -47,10 +47,6 @@
       <HintPath>..\packages\Relativity.Other.9.6.53.73\lib\kCura.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="kCura.Crypto, Version=9.5.418.7, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Vendor\kCura.Crypto.dll</HintPath>
-    </Reference>
     <Reference Include="kCura.Relativity.Client, Version=9.6.53.73, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Relativity.Rsapi.9.6.53.73\lib\kCura.Relativity.Client.dll</HintPath>
       <Private>True</Private>
