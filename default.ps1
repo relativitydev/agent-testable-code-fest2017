@@ -14,7 +14,7 @@ task default -Depends LocalBuild
 task LocalBuild -Depends Compile, UnitTest, IntegrationTest
 
 task NuGetRestore -Description "Restore NuGet packages for the solution" {
-	Write-Host "Solution :  $solution"
+	Write-Verbose "Solution :  $solution"
 	exec { & $nuget_exe @('restore', $solution) }
 }
 
@@ -55,7 +55,6 @@ task IntegrationTest -Depends TestInitialize -Description "Run NUnit integration
 	$testDir = Join-Path $root "RelativityAgent1\AgentNunitIntegrationTest"
 	Write-Verbose "Test directory is : $testDir"
 	Write-Host "Test directory is : $testDir"
-	#$configSource = Join-Path $root "JenkinsApp.config"
 	$configSource = "C:/smoketest.config"
 	Write-Verbose "configSource is : $configSource"
 	Write-Host "configSource is : $configSource"
@@ -68,7 +67,6 @@ task IntegrationTest -Depends TestInitialize -Description "Run NUnit integration
 
 	Copy-Item $configSource $configDestination -Verbose:$VerbosePreference
 
-	#exec { & $nunit_exe $solution --where "cat == testtype.universal && class=~/^.+\.AgentIntegrationTest\..+$/" --result="$test_logs\IntegrationTests.xml;format=nunit2" } -errorMessage "Integration tests failed!"
 	exec { & $nunit_exe $testAssembly --result="$test_logs\IntegrationTests.xml;format=nunit2" } -errorMessage "Integration tests failed!"
 }
 	

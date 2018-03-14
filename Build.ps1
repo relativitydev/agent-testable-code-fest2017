@@ -10,26 +10,26 @@ param(
 	[string]$targetEnvironment
 )
 
-  #set up variables
+#set up variables
 $BASE_DIR = Resolve-Path .
-Write-Host "BASE_DIR resolves to: $BASE_DIR"
+Write-Verbose "BASE_DIR resolves to: $BASE_DIR"
 
 $NUGET_URL = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-Write-Host "nuget URL: $NUGET_URL"
+Write-Verbose "nuget URL: $NUGET_URL"
 
 $TOOLS_DIR = Join-Path $BASE_DIR "buildtools"
-Write-Host "Tools directory: $TOOLS_DIR"
+Write-Verbose "Tools directory: $TOOLS_DIR"
 
 $TOOLS_PACKAGES_FILE = Join-Path $TOOLS_DIR "packages.config"
-Write-Host "Packages config : $TOOLS_PACKAGES_FILE"
+Write-Verbose "Packages config : $TOOLS_PACKAGES_FILE"
 
 $LOGGER = Join-Path $TOOLS_DIR "Microsoft.Build.Logging.StructuredLogger.1.0.89\lib\net46\StructuredLogger.dll"
 
 $TOOLS_PACKAGES_FILE = Join-Path $TOOLS_DIR "packages.config"
-Write-Host "Nuget Pacakge File resolves to :  $TOOLS_PACKAGES_FILE"
+Write-Verbose "Nuget Pacakge File resolves to :  $TOOLS_PACKAGES_FILE"
 
 $NUGET_EXE = Join-Path $TOOLS_DIR "nuget.exe"
-Write-Host "$NUGET_EXE"
+Write-Verbose "$NUGET_EXE"
 
 $NUNIT_EXE = Join-Path $TOOLS_DIR "NUnit.ConsoleRunner.3.6.0\tools\nunit3-console.exe"
 
