@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.Remoting.Messaging;
+using System.Threading.Tasks;
 
 namespace AgentNunitIntegrationTest
 {
@@ -175,6 +176,24 @@ namespace AgentNunitIntegrationTest
 			fieldArtifactID = resultSet.Results[0].Artifact.ArtifactID;
 			return fieldArtifactID;
 		}
+
+		//public static class RelativityInformation
+		//{
+		//	/ <summary>
+		//	/ Gets the version of the current Relativity instance
+		//	/ </summary>
+		//	/ <returns>The Relativity version in the format "x.x.x.x"</returns>
+		//	public static async Task<string> GetRelativityVersionAsync()
+		//	{
+		//		string relativityVersion;
+		//		using (IInstanceDetailsManager proxy = helper.GetServicesManager().GetDefaultProxy<IInstanceDetailsManager>())
+		//		{
+		//			relativityVersion = await proxy.GetRelativityVersionAsync();
+		//		}
+
+		//		return relativityVersion;
+		//	}
+		//}
 
 		public static Int32 CreateField_LongText(IRSAPIClient client, int workspaceID, string fieldName)
 		{
