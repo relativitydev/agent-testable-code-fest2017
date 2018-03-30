@@ -9,6 +9,10 @@ install:
 skip_commits:
   message: /updated readme.*|update readme.*s/
 build: off
+
+branches:
+    only:
+      - CIwithAppveyor
 #---------------------------------# 
 #      build configuration        # 
 #---------------------------------# 
