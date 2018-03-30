@@ -2,17 +2,15 @@
 #      environment configuration  # 
 #---------------------------------# 
 version: 1.0.{build}
-os: WMF 5
-install:
-  - ps: . .\developmentScripts\AppVeyorInstall.ps1
-
-skip_commits:
-  message: /updated readme.*|update readme.*s/
-build: off
-
 branches:
     only:
       - CIwithAppveyor
+os: WMF 5
+
+install:
+  - ps: . .\developmentScripts\AppVeyorInstall.ps1
+
+
 #---------------------------------# 
 #      build configuration        # 
 #---------------------------------# 
