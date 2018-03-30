@@ -1,0 +1,22 @@
+#---------------------------------# 
+#      environment configuration  # 
+#---------------------------------# 
+version: 1.0.{build}
+os: WMF 5
+install:
+  - ps: . .\developmentScripts\AppVeyorInstall.ps1
+
+skip_commits:
+  message: /updated readme.*|update readme.*s/
+build: off
+#---------------------------------# 
+#      build configuration        # 
+#---------------------------------# 
+build_script: 
+  - ps: . .\developmentScripts\Build.ps1
+
+#---------------------------------# 
+#      test configuration         # 
+#---------------------------------# 
+test_script: 
+  - ps: . .\developmentScripts\Build.ps1 UnitTest
