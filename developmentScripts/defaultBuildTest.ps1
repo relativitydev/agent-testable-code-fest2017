@@ -12,6 +12,7 @@ properties {
 	# MSBUILD VS2015 - C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe
 	#$msbuild = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBuild.exe"
 	$msbuild = "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
+	$testAssembly =  $testAssembly = Join-Path $root "..\RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll"
 }
 
 task default -Depends LocalBuild
@@ -65,16 +66,12 @@ task UnitTest -Alias Test -Depends TestInitialize -Description "Run NUnit unit t
 }
 
 task IntegrationTest -Depends TestInitialize -Description "Run NUnit integration unit tests. " {
-    $testDir = Join-Path $root "..\RelativityAgent1\AgentNunitIntegrationTest"
-    Write-Host "Test directory is : $testDir"
-    $configSource = "..\RelativityAgent1\AgentNunitIntegrationTest\app.config"
-    Write-Host "configSource is : $configSource"
-    $configDestination = Join-Path $root "..\RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll.config"
-    $testAssembly = Join-Path $root "..\RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll"
+	#$testDir = Join-Path $root "..\RelativityAgent1\AgentNunitIntegrationTest"
+   # $configSource = "..\RelativityAgent1\AgentNunitIntegrationTest\app.config"
+    #Write-Host "configSource is : $configSource"
+    #$configDestination = Join-Path $root "..\RelativityAgent1\AgentNunitIntegrationTest\bin\Debug\AgentNunitIntegrationTest.dll.config"
     Write-Host "Test assembly : $testAssembly"
-
-    Copy-Item $configSource $configDestination -Verbose:$VerbosePreference
-
+    #Copy-Item $configSource $configDestination -Verbose:$VerbosePreference
     exec { & $nunit_exe $testAssembly --result="$test_logs\IntegrationTest.xml;format=nunit2" } -errorMessage "Integration tests failed!"
 }
 	

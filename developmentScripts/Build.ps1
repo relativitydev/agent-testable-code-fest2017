@@ -13,32 +13,21 @@ param(
 #set up variables
 $BASE_DIR = Resolve-Path .
 Write-Verbose "BASE_DIR resolves to: $BASE_DIR"
-
 #VS 2017
 #$NUGET_URL = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-
 #VS2015
 $NUGET_URL = "https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe"
-
 Write-Verbose "nuget URL: $NUGET_URL"
-
 $TOOLS_DIR = Join-Path $BASE_DIR "buildtools"
 Write-Verbose "Tools directory: $TOOLS_DIR"
-
 $TOOLS_PACKAGES_FILE = Join-Path $TOOLS_DIR "packages.config"
 Write-Verbose "Packages config : $TOOLS_PACKAGES_FILE"
-
 $LOGGER = Join-Path $TOOLS_DIR "Microsoft.Build.Logging.StructuredLogger.1.0.89\lib\net46\StructuredLogger.dll"
-
 $TOOLS_PACKAGES_FILE = Join-Path $TOOLS_DIR "packages.config"
 Write-Verbose "Nuget Pacakge File resolves to :  $TOOLS_PACKAGES_FILE"
-
 $NUGET_EXE = Join-Path $TOOLS_DIR "nuget.exe"
 Write-Verbose "$NUGET_EXE"
-
 $NUNIT_EXE = Join-Path $TOOLS_DIR "NUnit.ConsoleRunner.3.6.0\tools\nunit3-console.exe"
-
-$SOLUTION_PATH = Join-Path "..\RelativityAgent1\RelativityAgent1" -ChildPath "RelativityAgent.sln"
 
 # Restore Nuget package
 Write-Verbose "Checking for NuGet in tools path..."
@@ -54,6 +43,7 @@ Write-Output "Using $TOOLS_PACKAGES_FILE..."
 if ($LASTEXITCODE -ne 0) {
     Throw "An error occured while restoring NuGet tools."
 }
+
 
 # Import any modules that you'll need to build
 Import-Module (Join-Path $TOOLS_DIR "psake.4.6.0\tools\psake.psm1") -ErrorAction Stop
