@@ -1,0 +1,97 @@
+#!/usr/bin/env groovy
+
+def passed = false
+
+try 
+{
+	properties([parameters([string(defaultValue: 'debug', description: 'Type of build: release or debug', name: 'buildType'),string(defaultValue: '192.168.137.68/Relativity', description: 'RSAPI Address', name: 'RSAPIServerAddress'), string(defaultValue: '192.168.137.68/Relativity', description: 'REST Address', name: 'RESTServerAddress'), string(defaultValue: 'testuser@relativity.co', description: 'Relativity UserName', name: 'AdminUsername'), string(defaultValue: 'Test1234!', description: 'Relativity Password', name: 'AdminPassword'), string(defaultValue: ' ', description: 'SQL Server address', name: 'SQLServerAddress'),
+	string(defaultValue: '', description: 'SQL UserName', name: 'SQLUsername'), string(defaultValue: '', description: 'SQL Password', name: 'SQLPassword'),
+	string(defaultValue: '', description: 'Distributed SQLServer Address', name: 'DistSQLServerAddress'), string(defaultValue: '', description: 'Distributed SQL UserName', name: 'DistSQLUsername'), string(defaultValue: '', description: 'Distributed SQL Password', name: 'DistSQLPassword'), string(defaultValue: 'kCura Starter Template', description: 'Test Workspace Template Name', name: 'TestWorkspaceTemplateName')])])
+	def type = params.buildType
+	
+node('master') {
+
+         def location = "..\\RelativityAgent1\\RelativityAgent.sln"
+        
+		
+        stage('Checkout') {	  
+                checkout([$class: 'GitSCM', 
+                branches: [[name: 'CIwithJenkins']], 
+                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
+                userRemoteConfigs: [[url: 'https://github.com/relativitydev/agent-testable-code-fest2017.git']]])
+				bat 'echo checkout complete'
+    
+        }
+		
+	
+		stage('Create app config'){
+			bat 'echo create config start'
+			create_nunit_app_config()
+			bat 'echo config created'
+    }
+        stage('build'){
+                fileExists location
+				
+				bat 'echo build command starting'
+				echo location
+			    echo type
+				bat "powershell.exe \"& {.\\developmentScripts\\Build.ps1 Compile -configuration ${type};exit \$lastexitcode}\""
+			    bat 'echo build command done'
+        }
+		stage('Unit Test'){
+				bat "powershell.exe \"& {.\\developmentScripts\\Build.ps1 UnitTest}\""
+       }
+	   stage('Integration Test'){
+				bat "powershell.exe \"& {.\\developmentScripts\\Build.ps1 IntegrationTest}\""
+       }
+	   passed = true
+	   }
+}
+	   
+finally
+{
+	if (!passed) 
+	{
+		mail (
+			subject: "FAILURE: Job '${env.JOB_NAME}'",
+			body: "FAILURE: Job '${env.JOB_NAME}': Check console output at ${env.BUILD_URL}",
+			to: 'priyanka.pande@relativity.com'
+		)
+	}
+	if (passed) 
+	{
+	mail (
+			subject: "PASSED: Job '${env.JOB_NAME}'",
+			body: "PASSED: Job '${env.JOB_NAME}': Check console output at ${env.BUILD_URL}",
+			to: 'priyanka.pande@relativity.com'
+		)	
+	}
+}
+
+
+def create_nunit_app_config() {
+    
+    def smoke_template = readFile 'developmentScripts/JenkinsApp.config'
+    
+    smoke_template = smoke_template.replace('$AdminPassword', params.AdminPassword.toString())
+    smoke_template = smoke_template.replace('$AdminUsername', params.AdminUsername)
+    smoke_template = smoke_template.replace('$RESTServerAddress', params.RESTServerAddress)
+    smoke_template = smoke_template.replace('$RSAPIServerAddress', params.RSAPIServerAddress)
+	
+	 
+    smoke_template = smoke_template.replace('$SQLServerAddress', params.SQLServerAddress)
+    smoke_template = smoke_template.replace('$SQLUsername', params.SQLUsername)
+    smoke_template = smoke_template.replace('$SQLPassword', params.SQLPassword.toString())
+    smoke_template = smoke_template.replace('$DistSQLServerAddress', params.DistSQLServerAddress)
+
+	 smoke_template = smoke_template.replace('$DistSQLUsername', params.DistSQLUsername)
+    smoke_template = smoke_template.replace('$DistSQLPassword', params.DistSQLPassword.toString())
+    smoke_template = smoke_template.replace('$TestWorkspaceTemplateName', params.TestWorkspaceTemplateName)
+    
+    retry(3) {
+        writeFile file: "C:/smoketest.config", text: smoke_template
+    }    
+}
+
+	   
+	   
