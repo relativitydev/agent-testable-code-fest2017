@@ -27,7 +27,7 @@ namespace AgentNunitIntegrationTest
 		public int FieldArtifactId;
 		public const string NewFieldName = "Demo Document Field";
 		private int _workspaceId;
-		private string _workspaceName = "Test Workspace CI";
+		private string _workspaceName = "Test Workspace Devex";
 
 		#endregion
 
@@ -44,7 +44,7 @@ namespace AgentNunitIntegrationTest
 			var helper = new TestHelper();
 			ServicesManager = helper.GetServicesManager();
 			EddsDbContext = helper.GetDBContext(-1);
-			
+
 
 			//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 			//Create client
@@ -106,38 +106,45 @@ namespace AgentNunitIntegrationTest
 						Console.WriteLine("Creating workspace.....");
 
 						//Not Using Test Helpers
-						//int? templateArtifactID = null;
-						//kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Workspace> query = new kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Workspace>();
-						//query.Condition = new kCura.Relativity.Client.TextCondition(kCura.Relativity.Client.DTOs.FieldFieldNames.Name, kCura.Relativity.Client.TextConditionEnum.EqualTo, ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME);
-						//query.Fields = kCura.Relativity.Client.DTOs.FieldValue.AllFields;
-						//kCura.Relativity.Client.DTOs.QueryResultSet<kCura.Relativity.Client.DTOs.Workspace> resultSet = Client.Repositories.Workspace.Query(query, 0);
+						int? templateArtifactID = null;
+						kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Workspace> query = new kCura.Relativity.Client.DTOs.Query<kCura.Relativity.Client.DTOs.Workspace>();
+						query.Condition = new kCura.Relativity.Client.TextCondition(kCura.Relativity.Client.DTOs.FieldFieldNames.Name, kCura.Relativity.Client.TextConditionEnum.EqualTo, ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME);
+						query.Fields = kCura.Relativity.Client.DTOs.FieldValue.AllFields;
+						kCura.Relativity.Client.DTOs.QueryResultSet<kCura.Relativity.Client.DTOs.Workspace> resultSet = Client.Repositories.Workspace.Query(query, 0);
 
-						//templateArtifactID = resultSet.Results.FirstOrDefault().Artifact.ArtifactID;
-						//var workspaceDTO = new kCura.Relativity.Client.DTOs.Workspace();
-						//workspaceDTO.Name = _workspaceName;
+						templateArtifactID = resultSet.Results.FirstOrDefault().Artifact.ArtifactID;
+						var workspaceDTO = new kCura.Relativity.Client.DTOs.Workspace();
+						workspaceDTO.Name = _workspaceName;
 
-						//ProcessOperationResult result = new kCura.Relativity.Client.ProcessOperationResult();
+						ProcessOperationResult result = new kCura.Relativity.Client.ProcessOperationResult();
 						//Create a ProcessInformation to return the status of the Workspace creation process.
-						//kCura.Relativity.Client.ProcessInformation processInfo;
-						//try
-						//{
-						//	Call CreateAsync passing the templateID and workspaceDTO.
-						//	This returns a ProcessOperationResult with a Success property and a ProcessID property.
-						//	NOTE: The Success property indicates the success of starting the create process, 
-						//	not the success of the actual workspace creation.
-						//	result = Client.Repositories.Workspace.CreateAsync(templateArtifactID.Value, workspaceDTO);
+						kCura.Relativity.Client.ProcessInformation processInfo;
+						try
+						{
+							//Call CreateAsync passing the templateID and workspaceDTO.
+							//This returns a ProcessOperationResult with a Success property and a ProcessID property.
+							//NOTE: The Success property indicates the success of starting the create process, 
+							//not the success of the actual workspace creation.
+							result = Client.Repositories.Workspace.CreateAsync(templateArtifactID.Value, workspaceDTO);
 
-						//}
-						//catch (Exception ex)
-						//{
-						//	Console.WriteLine(ex.Message, "Unhandled Exception");
+							kCura.Relativity.Client.ProcessInformation processState = Client.GetProcessState(Client.APIOptions, result.ProcessID);
 
-						//}
 
-						_workspaceId =
-						Relativity.Test.Helpers.WorkspaceHelpers.CreateWorkspace.CreateWorkspaceAsync(_workspaceName,
-							ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME, ServicesManager, ConfigurationHelper.ADMIN_USERNAME,
-							ConfigurationHelper.DEFAULT_PASSWORD).Result;
+							while (processState.State != ProcessStateValue.Completed)
+							{
+								System.Threading.Thread.Sleep(1000);
+								processState = Client.GetProcessState(Client.APIOptions, result.ProcessID);
+							}
+							_workspaceId = (int)processState.OperationArtifactIDs.FirstOrDefault();
+
+						}
+						catch (Exception ex)
+						{
+							Console.WriteLine(ex.Message, "Unhandled Exception");
+
+						}
+
+						//_workspaceId =Relativity.Test.Helpers.WorkspaceHelpers.CreateWorkspace.CreateWorkspaceAsync(_workspaceName,ConfigurationHelper.TEST_WORKSPACE_TEMPLATE_NAME, ServicesManager, ConfigurationHelper.ADMIN_USERNAME,ConfigurationHelper.DEFAULT_PASSWORD).Result;
 						Console.WriteLine($"Workspace created [WorkspaceArtifactId= {_workspaceId}].....");
 						j = 5;
 					}
@@ -247,4 +254,5 @@ namespace AgentNunitIntegrationTest
 		}
 	}
 }
+
 
