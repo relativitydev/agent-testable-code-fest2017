@@ -295,3 +295,4 @@ __pycache__/
 /buildtools/kCura.PSBuildTools.0.3.0
 /buildtools/Microsoft.Build.Logging.StructuredLogger.1.0.89
 /RelativityAgent1/AgentNunitIntegrationTest/app.config
+/.vscode
