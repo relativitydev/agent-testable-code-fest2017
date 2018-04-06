@@ -18,7 +18,7 @@ Write-Verbose "BASE_DIR resolves to: $BASE_DIR"
 #VS2015
 $NUGET_URL = "https://dist.nuget.org/win-x86-commandline/v3.3.0/nuget.exe"
 Write-Verbose "nuget URL: $NUGET_URL"
-$TOOLS_DIR = Join-Path $BASE_DIR "buildtools"
+$TOOLS_DIR = Join-Path $BASE_DIR "developmentScripts\buildtools"
 Write-Verbose "Tools directory: $TOOLS_DIR"
 $TOOLS_PACKAGES_FILE = Join-Path $TOOLS_DIR "packages.config"
 Write-Verbose "Packages config : $TOOLS_PACKAGES_FILE"
