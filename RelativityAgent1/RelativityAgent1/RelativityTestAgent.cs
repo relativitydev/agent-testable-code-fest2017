@@ -24,7 +24,7 @@ namespace RelativityAgent1
 			try
 			{
 				//Create instance of Relativity Test Job  
-				RelativityTestAgentJob job = new RelativityTestAgentJob(artifactQueries,  _logger, SvcManager, IdentityCurrentUser, -1, Helper);
+				RelativityTestAgentJob job = new RelativityTestAgentJob(artifactQueries,  _logger, SvcManager, IdentityCurrentUser, 1017533, Helper);
 				job.Execute();
 			}
 			catch (Exception ex)

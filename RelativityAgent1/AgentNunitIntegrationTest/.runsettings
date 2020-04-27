@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Parameters used by tests at run time -->
+  <TestRunParameters>
+    <Parameter name="WorkspaceID" value="-1" />
+    <Parameter name="TestWorkspaceName" value="Test Workspace" />
+    <Parameter name="TestWorkspaceTemplateName" value="New Case Template" />
+    <Parameter name="GroupName" value="Test Group" />
+    <Parameter name="AdminUsername" value="relativity.admin@relativity.com" />
+    <Parameter name="AdminPassword" value="Test1234!" />
+    <Parameter name="SQLUserName" value="eddsdbo" />
+    <Parameter name="SQLPassword" value="Test1234!" />
+    <Parameter name="SQLServerAddress" value="172.26.83.243" />
+    <Parameter name="RSAPIServerAddress" value="172.26.83.243" />
+    <Parameter name="RESTServerAddress" value="172.26.83.243" />
+    <Parameter name="ServerBindingType" value="http" />
+    <Parameter name="RelativityInstanceAddress" value="172.26.83.243" />
+  </TestRunParameters>
+</RunSettings>
